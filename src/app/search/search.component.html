@@ -1,0 +1,5 @@
+<form class="input" [formGroup]="form" (ngSubmit)="submit()">
+  <input class="input__container" type="text" placeholder="Искать..." formControlName="search" autofocus="autofocus">
+  <span class="close" (click)="onClickRemove()">&#10006;</span>
+  <button type="submit" class="button" [disabled]="form.invalid">Найти</button>
+</form>

@@ -1,0 +1,74 @@
+.input{
+  display: flex;
+  max-width: 880px;
+  margin: 20px auto;
+  position: relative;
+}
+
+.input__container{
+  display: flex;
+  position: relative;
+  width: 80%;
+  border: 1px solid #000;
+  border-radius: 4px;
+  height: 30px;
+  padding: 0 20px;
+  margin: 0 10px 0 0;
+  outline: none;
+
+}
+.button{
+  width: 20%;
+  height: 30px;
+  border-style: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  transition: opacity 0.2s ease-in;
+  cursor: pointer;
+
+    &:hover{
+      opacity: 0.8;
+    }
+}
+
+.close {
+  position: absolute;
+  padding: 0 8px;
+  right: 180px;
+  top: 7px
+}
+@media screen and (max-width: 720px){
+
+  .close{
+    right: 140px;
+  }
+}
+
+@media screen and (max-width: 520px){
+  .button{
+    height: 26px;
+  }
+  .close{
+    right: 110px;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .button{
+    height: 22px;
+  }
+}
+
+@media screen and (max-width: 520px){
+  .input__container{
+    height: 26px;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .input__container{
+    height: 22px;
+  }
+}
