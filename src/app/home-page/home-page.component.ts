@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiServices} from "../shared/api.services";
 import {map} from "rxjs/operators";
+import {ICardInterface} from "../interface/card.interface";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-home-page',
@@ -10,14 +12,13 @@ import {map} from "rxjs/operators";
 })
 export class HomePageComponent implements OnInit {
 
+  card$: Observable<any>
+
   constructor(private apiServices: ApiServices) {}
 
 
   ngOnInit(): void {
-    const con$ = this.apiServices.getRandom()
-    con$.pipe(map((data) => {
-      console.log(data)
-    }))
-  }
+    this.card$ = this.apiServices.getRandom()
+    }
 
 }
