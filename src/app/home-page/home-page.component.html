@@ -1,8 +1,8 @@
 <app-header></app-header>
-<app-search></app-search>
+<app-search (onClick)="onClickSearch($event)"></app-search>
 <div class="card" *ngIf="card$ | async as cards">
   <div class="card__img-wrapper" *ngFor="let card of cards">
-      <img class="card__img" src="{{card.urls.regular}}"  alt="{{card.description}}"/>
+      <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
       <p class="card__description">{{card.user.name}} {{card.description}}</p>
   </div>
 </div>
