@@ -1,6 +1,7 @@
 .photo {
   max-width: 860px;
   margin: 30px auto;
+
   &__goback {
     font-size: 20px;
     color: whitesmoke;
@@ -10,6 +11,8 @@
   &__image {
     width: 100%;
     margin-top: 18px;
+    height: 76vh;
+    object-fit: cover;
   }
   &__note {
     margin-top: 72px;
