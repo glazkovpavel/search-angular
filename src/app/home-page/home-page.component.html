@@ -4,10 +4,17 @@
 <ng-container  *ngIf="model$ | async as model">
   <ng-container *ngIf="model.state==='READY'">
     <div class="card">
-      <a style="text-decoration: none" [routerLink]="['/photo', card.id]" class="card__img-wrapper" *ngFor="let card of model.items">
-        <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
-        <p class="card__description">{{card.user?.username}} {{card?.description}}</p>
+      <div  class="card__img-wrapper" *ngFor="let card of model.items">
+       <a style="text-decoration: none" [routerLink]="['/photo', card.id]">
+         <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
        </a>
+        <div class="card__container">
+          <p class="card__description">{{card.user?.username}} {{card?.description}}</p>
+          <button [class]="like ?  'card__item-button card__item-like-button'
+          : 'card__item-button card__item-like-button-active'"
+                  (click)="like ? handleDisLike(card.id) : handleLikeButtonCLick(card.id)"></button>
+        </div>
+      </div>
     </div>
 
   </ng-container>

@@ -1,6 +1,10 @@
-export interface Model<T> {
+export interface Model<T, S> {
  items?: T,
-  state: 'READY' | 'ERROR' | 'PENDING'
+  state: S
 pa
 }
 //сделать интерфейс для стейта
+
+
+export type State = 'READY' | 'ERROR' | 'PENDING';
+
