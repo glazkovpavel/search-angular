@@ -1,1 +1,17 @@
-<p>photo works!</p>
+
+<div class="photo" *ngIf="photo$ | async as photo; else loading">
+  <a class="photo__goback" style="text-decoration: none" routerLink="/">⟵ Go back</a>
+
+        <img class="photo__image" src='{{photo.urls.regular}}' alt='{{photo.description}}' />
+                <p class="photo__title">{{photo.user.name}}</p>
+                <p class="photo__subtitle">{{photo.description}}</p>
+
+</div>
+
+<ng-container *ngIf="myError">
+  <app-not-found></app-not-found>
+</ng-container>
+
+<ng-template #loading >
+  <p class="loading">Загрузка....</p>
+</ng-template>

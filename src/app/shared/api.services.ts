@@ -43,4 +43,16 @@ export class ApiServices {
       }
     ))
   }
+
+  public getPhotoById(id): Observable<any> {
+    return this.http.get(`${this.baseUrl}/photos/${id}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Client-ID ${this.apiKey}`
+        })
+      }).pipe(map((response) => {
+        console.log(response)
+        return response}
+    ))
+  }
 }
