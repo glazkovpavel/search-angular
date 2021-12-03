@@ -1,10 +1,23 @@
 <app-header></app-header>
 <app-search (onClick)="onClickSearch($event)"></app-search>
-<div class="card" *ngIf="card$ | async as cards">
-  <a style="text-decoration: none" [routerLink]="['/photo', card.id]" class="card__img-wrapper" *ngFor="let card of cards">
-      <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
-      <p class="card__description">{{card.user.name}} {{card.description}}</p>
-  </a>
-</div>
-<app-footer></app-footer>
 
+<ng-container  *ngIf="model$ | async as model">
+  <ng-container *ngIf="model.state==='READY'">
+    <div class="card">
+      <a style="text-decoration: none" [routerLink]="['/photo', card.id]" class="card__img-wrapper" *ngFor="let card of model.items">
+        <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
+        <p class="card__description">{{card.user?.username}} {{card?.description}}</p>
+       </a>
+    </div>
+
+  </ng-container>
+  <ng-container class="loading" *ngIf="model.state === 'PENDING'">
+    <p class="loading">Загрузка...</p>
+  </ng-container>
+
+  <ng-container class="loading" *ngIf="model.state === 'ERROR'">
+    <app-not-found></app-not-found>
+  </ng-container>
+
+</ng-container>
+<app-footer></app-footer>

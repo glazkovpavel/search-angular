@@ -5,11 +5,17 @@ import {Observable} from "rxjs";
 import {ICardInterface} from "../interface/card.interface";
 
 export interface ISearchResult {
+  id: string,
+  urls: {regular: string},
+  user: {username: string},
+  description: string
+}
+
+export interface IGetImageResponse {
   results: ISearchResult[],
   total: number,
   total_pages: number
 }
-
 @Injectable()
 export class ApiServices {
 
@@ -19,16 +25,12 @@ export class ApiServices {
   constructor(private http: HttpClient) {
   }
 
-  public getRandom(count = 12): Observable<any> {
+  public getRandom(count = 12): Observable<ISearchResult[]> {
     return this.http.get(`${this.baseUrl}/photos/random?&count=${count}`, {
       headers: new HttpHeaders({
         Authorization: `Client-ID ${this.apiKey}`
       })
-    }).pipe(map((res) => {
-      console.log('getRandom', res)
-      return res
-      }
-    ))
+    }) as Observable<ISearchResult[]>;
   }
 
   public onSearch(query, page, per_page = 12): Observable<ISearchResult[]> {
@@ -36,23 +38,15 @@ export class ApiServices {
       headers: new HttpHeaders({
         Authorization: `Client-ID ${this.apiKey}`
       })
-      }).pipe(map((res: ISearchResult[]) => {
-        console.log('onSearch', res)
-
-      return res
-      }
-    ))
+      }) as Observable<ISearchResult[]>
   }
 
-  public getPhotoById(id): Observable<any> {
+  public getPhotoById(id): Observable<ISearchResult[]> {
     return this.http.get(`${this.baseUrl}/photos/${id}`,
       {
         headers: new HttpHeaders({
           Authorization: `Client-ID ${this.apiKey}`
         })
-      }).pipe(map((response) => {
-        console.log(response)
-        return response}
-    ))
+      }) as Observable<ISearchResult[]>
   }
 }

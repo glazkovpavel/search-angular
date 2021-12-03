@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ApiServices, ISearchResult} from "../shared/api.services";
-import {map} from "rxjs/operators";
+import {ApiServices, IGetImageResponse, ISearchResult} from "../shared/api.services";
+import {catchError, map, startWith} from "rxjs/operators";
 import {ICardInterface} from "../interface/card.interface";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import {Model} from "../interface/model.interface";
 
 @Component({
   selector: 'app-home-page',
@@ -12,19 +13,28 @@ import {Observable} from "rxjs";
 })
 export class HomePageComponent implements OnInit {
 
-  card$: Observable<any>
-  searchResult: Observable<ISearchResult[]>
+  model$: Observable<Model<ISearchResult[]>>
 
-  search = ''
-  per_page: number = 12
-  page: any = 1
-  total_pages: number
+  search: string = '';
+  per_page: number = 12;
+  page: number = 1;
+  total_pages: number;
 
   constructor(private apiServices: ApiServices) {}
 
 
   ngOnInit(): void {
-    this.card$ = this.apiServices.getRandom()
+    // @ts-ignore
+    this.model$ = this.apiServices.getRandom().pipe(
+      map((response: ISearchResult[]) => { return ({
+        items: response,
+          state: 'READY',
+      })
+      }),
+      startWith({state: 'PENDING'}),
+      catchError(() => { return of({state: 'ERROR'}) } )
+    )
+
     }
 
   onClickSearch(search: string) {
@@ -38,14 +48,20 @@ export class HomePageComponent implements OnInit {
     const per_page: number = this.per_page
     const page: number = this.page
 
-    this.card$ = this.apiServices.onSearch(query, page, per_page)
-      // @ts-ignore
-      .pipe(map((res: ISearchResult) => {
-        console.log("res.results", res.results)
-        this.total_pages = res.total_pages
-       return  res.results
-        }
-      ))
+
+    // @ts-ignore
+    this.model$ = this.apiServices.onSearch(query, page, per_page).pipe(
+      map((response: ISearchResult[]) => { // @ts-ignore
+        return ({
+          // @ts-ignore
+        items: response.results,
+        state: 'READY',
+      })
+      }),
+      startWith({state: 'PENDING'}),
+      catchError(() => { return of({state: 'ERROR'}) } )
+      )
+
 
   }
 }
