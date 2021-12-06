@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit,} from '@angular/core';
 import {ApiServices, IGetImageResponse, ISearchResult} from "../shared/api.services";
 import {catchError, map, startWith} from "rxjs/operators";
 import {ICardInterface} from "../interface/card.interface";
 import {Observable, of} from "rxjs";
 import {Model, State} from "../interface/model.interface";
+import {SearchComponent} from "../search/search.component";
 
 @Component({
   selector: 'app-home-page',
@@ -12,6 +13,8 @@ import {Model, State} from "../interface/model.interface";
   providers: [ApiServices]
 })
 export class HomePageComponent implements OnInit {
+
+  public remove: SearchComponent;
 
   model$: Observable<Model<ISearchResult[], State>>
 
@@ -72,5 +75,15 @@ export class HomePageComponent implements OnInit {
   handleLikeButtonCLick(id: string) {
     this.like = !this.like
     console.log('id', id)
+  }
+
+  onRandom() {
+    this.ngOnInit()
+
+  }
+
+  onRefresh() {
+    debugger
+    this.apiServices.refresh$.next(true);
   }
 }

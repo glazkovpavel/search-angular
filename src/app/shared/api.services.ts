@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
+import {map, switchMap} from "rxjs/operators";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {ICardInterface} from "../interface/card.interface";
 
 export interface ISearchResult {
@@ -19,6 +19,8 @@ export interface IGetImageResponse {
 @Injectable()
 export class ApiServices {
 
+  public refresh$: BehaviorSubject<boolean> = new BehaviorSubject(false)
+
   private baseUrl = "https://api.unsplash.com"
   private apiKey = "P2hzfuCuOqvhuqX4A9npRfIU6HLhQKOPLO87eBJKhmI"
 
@@ -26,11 +28,16 @@ export class ApiServices {
   }
 
   public getRandom(count = 12): Observable<ISearchResult[]> {
-    return this.http.get(`${this.baseUrl}/photos/random?&count=${count}`, {
-      headers: new HttpHeaders({
-        Authorization: `Client-ID ${this.apiKey}`
+    return this.refresh$.pipe(
+      switchMap(() => {
+        debugger;
+        return this.http.get(`${this.baseUrl}/photos/random?&count=${count}`, {
+          headers: new HttpHeaders({
+            Authorization: `Client-ID ${this.apiKey}`
+          })
+        }) as Observable<ISearchResult[]>;
       })
-    }) as Observable<ISearchResult[]>;
+    )
   }
 
   public onSearch(query, page, per_page = 12): Observable<IGetImageResponse> {

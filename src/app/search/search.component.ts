@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ApiServices} from "../shared/api.services";
 
@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
 
   form: FormGroup
   public search: string;
+  public value: string = '';
 
   constructor() { }
 
@@ -27,7 +28,7 @@ export class SearchComponent implements OnInit {
   }
 
   onClickRemove() {
-
+    this.search = ''
   }
 
   submit() {

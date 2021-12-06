@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ApiServices} from "../shared/api.services";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-not-found',
@@ -9,9 +10,14 @@ import {ApiServices} from "../shared/api.services";
 })
 export class NotFoundComponent implements OnInit {
 
+  @Output() public onReboot: EventEmitter<void> = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  reboot() {
+
+  }
 }
