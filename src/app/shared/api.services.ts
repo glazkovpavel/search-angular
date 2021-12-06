@@ -33,20 +33,20 @@ export class ApiServices {
     }) as Observable<ISearchResult[]>;
   }
 
-  public onSearch(query, page, per_page = 12): Observable<ISearchResult[]> {
+  public onSearch(query, page, per_page = 12): Observable<IGetImageResponse> {
     return this.http.get(`${this.baseUrl}/search/photos?query=${query}&page=${page}&per_page=${per_page}&order_by='popular'`, {
       headers: new HttpHeaders({
         Authorization: `Client-ID ${this.apiKey}`
       })
-      }) as Observable<ISearchResult[]>
+      }) as Observable<IGetImageResponse>
   }
 
-  public getPhotoById(id): Observable<ISearchResult[]> {
+  public getPhotoById(id): Observable<ISearchResult> {
     return this.http.get(`${this.baseUrl}/photos/${id}`,
       {
         headers: new HttpHeaders({
           Authorization: `Client-ID ${this.apiKey}`
         })
-      }) as Observable<ISearchResult[]>
+      }) as Observable<ISearchResult>
   }
 }
