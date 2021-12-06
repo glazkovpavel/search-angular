@@ -1,5 +1,9 @@
 
 <ng-container *ngIf="model$ | async as model">
+  <ng-container class="loading">
+    <p class="loading">Ничего не найдено</p>
+  </ng-container>
+
   <ng-container *ngIf="model.state==='READY'">
     <div class="photo" >
       <a class="photo__goback" style="text-decoration: none" routerLink="/">⟵ Go back</a>
@@ -13,6 +17,8 @@
   <ng-container class="loading" *ngIf="model.state === 'PENDING'">
     <p class="loading">Загрузка...</p>
   </ng-container>
+
+
 
   <ng-container class="loading" *ngIf="model.state === 'ERROR'">
     <app-not-found></app-not-found>
