@@ -1,7 +1,6 @@
 <app-header></app-header>
 <app-search (onClick)="onClickSearch($event)"></app-search>
 
-
 <ng-container  *ngIf="model$ | async as model">
 
   <ng-container *ngIf="model.state==='READY'">
