@@ -22,7 +22,6 @@ export class PhotoComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      debugger
       // @ts-ignore
       this.model$ = this.apiServices.getPhotoById(params.id).pipe(
         // @ts-ignore
@@ -35,8 +34,6 @@ export class PhotoComponent implements OnInit {
         startWith({state: "PENDING"}),
         catchError(() => { return of({state: 'ERROR'}) } )
       )
-
-
     })
   }
 
