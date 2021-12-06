@@ -5,6 +5,7 @@
     placeholder="Искать..."
     formControlName="search"
     [(ngModel)]="search"
+    [value]="value"
     autofocus="autofocus">
   <span class="close" (click)="onClickRemove()">&#10006;</span>
   <button type="submit" class="button" [disabled]="form.invalid">Найти</button>

@@ -2,7 +2,12 @@
 <app-search (onClick)="onClickSearch($event)"></app-search>
 
 <ng-container  *ngIf="model$ | async as model">
+
   <ng-container *ngIf="model.state==='READY'">
+    <ng-container class="loading" *ngIf="model.items.length === 0">
+      <p class="loading">Ничего не найдено...</p>
+      <button style="text-decoration: none" class="not-found__button" (click)="onRandom()">⟵ Назад</button>
+    </ng-container>
     <div class="card">
       <div  class="card__img-wrapper" *ngFor="let card of model.items">
        <a style="text-decoration: none" [routerLink]="['/photo', card.id]">
@@ -23,7 +28,7 @@
   </ng-container>
 
   <ng-container class="loading" *ngIf="model.state === 'ERROR'">
-    <app-not-found></app-not-found>
+    <app-not-found (onReboot)="onRefresh()"></app-not-found>
   </ng-container>
 
 </ng-container>

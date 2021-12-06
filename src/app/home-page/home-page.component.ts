@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit,} from '@angular/core';
 import {ApiServices, IGetImageResponse, ISearchResult} from "../shared/api.services";
 import {catchError, map, startWith} from "rxjs/operators";
 import {ICardInterface} from "../interface/card.interface";
 import {Observable, of} from "rxjs";
 import {Model, State} from "../interface/model.interface";
+import {SearchComponent} from "../search/search.component";
 
 @Component({
   selector: 'app-home-page',
@@ -13,6 +14,8 @@ import {Model, State} from "../interface/model.interface";
 })
 export class HomePageComponent implements OnInit {
 
+  public remove: SearchComponent;
+
   model$: Observable<Model<ISearchResult[], State>>
 
   search: string = '';
@@ -21,20 +24,20 @@ export class HomePageComponent implements OnInit {
   total_pages: number;
   like: boolean;
 
+
   constructor(private apiServices: ApiServices) {}
 
 
   ngOnInit(): void {
 
-    // @ts-ignore
     this.model$ = this.apiServices.getRandom().pipe(
       map((response: ISearchResult[]) => { return ({
         items: response,
-          state: 'READY',
+          state: State.READY,
       })
       }),
-      startWith({state: 'PENDING'}),
-      catchError(() => { return of({state: 'ERROR'}) } )
+      startWith({state: State.PENDING}),
+      catchError(() => { return of({state: State.ERROR}) } )
     )
 
     }
@@ -51,22 +54,18 @@ export class HomePageComponent implements OnInit {
     const page: number = this.page
 
 
-    // @ts-ignore
     this.model$ = this.apiServices.onSearch(query, page, per_page).pipe(
-      map((response: ISearchResult[]) => { // @ts-ignore
+      map((response: IGetImageResponse) => {
         return ({
-          // @ts-ignore
         items: response.results,
-        state: 'READY',
+        state: State.READY,
       })
       }),
-      startWith({state: 'PENDING'}),
-      catchError(() => { return of({state: 'ERROR'}) } )
+      startWith({state: State.PENDING}),
+      catchError(() => { return of({state: State.ERROR}) } )
       )
 
-
   }
-
 
   handleDisLike(id: string) {
     this.like = !this.like
@@ -76,6 +75,16 @@ export class HomePageComponent implements OnInit {
   handleLikeButtonCLick(id: string) {
     this.like = !this.like
     console.log('id', id)
+  }
+
+  onRandom() {
+    this.ngOnInit()
+
+  }
+
+  onRefresh() {
+    debugger
+    this.apiServices.refresh$.next(true);
   }
 }
 
