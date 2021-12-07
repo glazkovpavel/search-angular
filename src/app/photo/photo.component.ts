@@ -14,22 +14,30 @@ import {Model, State} from "../interface/model.interface";
 export class PhotoComponent implements OnInit {
 
   model$: Observable<Model<ISearchResult, State>>
+  myError: boolean
+
   constructor(
     private apiServices: ApiServices,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
+      debugger
+      // @ts-ignore
       this.model$ = this.apiServices.getPhotoById(params.id).pipe(
+        // @ts-ignore
         map((response: ISearchResult) => {
           return ({
             items: response,
-            state: State.READY
+            state: 'READY'
           })
         }),
-        startWith({state: State.PENDING}),
-        catchError(() => { return of({state: State.ERROR}) } )
+        startWith({state: "PENDING"}),
+        catchError(() => { return of({state: 'ERROR'}) } )
       )
+
+
     })
   }
+
 }

@@ -42,3 +42,16 @@ module.exports = function (config) {
     restartOnFileChange: true
   });
 };
+
+const data = [
+  {name: 'Joe', age: 20},
+  {name: 'Bill', age: 30},
+  {name: 'Kate', age: 23}
+]
+
+function getNames(data1){
+  return data1.sort().join(',')
+}
+
+const f = getNames(data)
+console.log(f)
