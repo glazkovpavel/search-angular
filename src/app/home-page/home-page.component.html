@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-search (onClick)="onClickSearch($event)"></app-search>
+<app-search [form]="form"></app-search>
 
 <ng-container  *ngIf="model$ | async as model">
 
@@ -31,5 +31,7 @@
     <app-not-found (onReboot)="onRefresh()"></app-not-found>
   </ng-container>
 
+  {{model.state}}
+<button (click)="onRefresh()"> fddsd</button>
 </ng-container>
 <app-footer></app-footer>

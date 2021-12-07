@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {map, switchMap} from "rxjs/operators";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {catchError, map, switchMap} from "rxjs/operators";
+import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {ICardInterface} from "../interface/card.interface";
 
 export interface ISearchResult {
@@ -27,15 +27,20 @@ export class ApiServices {
   constructor(private http: HttpClient) {
   }
 
+  public refresh() {
+    this.refresh$.next(true);
+  }
+
   public getRandom(count = 12): Observable<ISearchResult[]> {
     return this.refresh$.pipe(
       switchMap(() => {
-        debugger;
         return this.http.get(`${this.baseUrl}/photos/random?&count=${count}`, {
           headers: new HttpHeaders({
             Authorization: `Client-ID ${this.apiKey}`
           })
-        }) as Observable<ISearchResult[]>;
+        }).pipe(
+          catchError(() => of(null))
+        ) as Observable<ISearchResult[]>;
       })
     )
   }
