@@ -1,12 +1,13 @@
-<div class="card">
-  <div  class="card__img-wrapper" *ngFor="let card of model.items">
-    <a style="text-decoration: none" [routerLink]="['/photo', card.id]">
-      <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
+<app-header></app-header>
+<div class="save">
+  <div  class="save__img-wrapper">
+    <a style="text-decoration: none" >
+      <img class="save__img"/>
     </a>
-    <div class="card__container">
-      <p class="card__description">{{card.user?.username}} {{card?.description}}</p>
-      <button  class='card__item-button card____item-delete-button'
-              (click)=" handleDeleteCard(card.id)"></button>
+    <div class="save__container">
+      <p class="save__description"></p>
+      <button  class="save__item-button"
+              (click)=" handleDeleteCard()"></button>
     </div>
   </div>
 </div>

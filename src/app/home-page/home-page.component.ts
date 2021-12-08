@@ -83,6 +83,7 @@ export class HomePageComponent implements OnInit {
 
   handleLikeButtonCLick(id: string) {
     this.like = !this.like
+    localStorage.setItem('savedCardId', id)
     console.log('id', id)
   }
 

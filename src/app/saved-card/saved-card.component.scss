@@ -1,0 +1,74 @@
+.save{
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(2, calc(50% - 16px));
+  padding: 0;
+
+  &__img-wrapper {
+    position: relative;
+    padding-top: 100%;
+    margin-bottom: 10px;
+  }
+  &__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    display: block;
+    border-radius: 5px;
+  }
+  &__container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &__description{
+    font-family: 'Inter', 'Arial', 'Helvetica', 'sans-serif';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: whitesmoke;
+    margin-top: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  &__item-button {
+    width: 30px;
+    height: 30px;
+    outline: none;
+    border: none;
+    padding: 0;
+    margin: auto 16px auto 0;
+    cursor: pointer;
+    background: url('../../assets/images/delete__icon.svg') center no-repeat;
+    transition: opacity 0.3s ease-in-out;
+  }
+  &__item-button:hover {
+    opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .save{
+    grid-template-columns: repeat(1, calc(100%));
+  }
+}
+
+@media screen and (max-width: 620px){
+  .save__description{
+    font-weight: normal;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .save__description {
+    font-size: 16px;
+    line-height: 18px;
+  }
+}
