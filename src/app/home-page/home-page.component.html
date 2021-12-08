@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-search [form]="form"></app-search>
+<app-search [form]="form" (onClick)="onClickSearch($event)"></app-search>
 
 <ng-container  *ngIf="model$ | async as model">
 
@@ -30,8 +30,6 @@
   <ng-container class="loading" *ngIf="model.state === 'ERROR'">
     <app-not-found (onReboot)="onRefresh()"></app-not-found>
   </ng-container>
-
-  {{model.state}}
-<button (click)="onRefresh()"> fddsd</button>
 </ng-container>
+
 <app-footer></app-footer>

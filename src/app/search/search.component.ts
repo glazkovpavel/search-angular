@@ -19,12 +19,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.form = new FormGroup({
-    //   search: new FormControl(null, [
-    //     Validators.required
-    //   ])
-    // });
-
   }
 
   onClickRemove() {

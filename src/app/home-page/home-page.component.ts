@@ -19,7 +19,6 @@ export class HomePageComponent implements OnInit {
   public form: FormGroup;
 
   model$: Observable<Model<ISearchResult[], State>>
-  searchModel: IGetImageResponse;
 
   search: string = '';
   per_page: number = 12;
@@ -52,50 +51,28 @@ export class HomePageComponent implements OnInit {
         Validators.required
       ])
     });
-
-
-    // this.form.controls['search'].valueChanges.pipe(
-    //   distinctUntilChanged(),
-    //   switchMap((value: string) => this.onSearch(value)),
-    //     tap((result: IGetImageResponse) => { this.searchModel = result} )
-    //   ).subscribe();
-
-    this.form.controls['search'].valueChanges.pipe(
-      debounceTime(700),
-      distinctUntilChanged(),
-      switchMap((value: string) => this.onSearch(value)),
-      tap((result: IGetImageResponse) => { this.searchModel = result} )
-    ).subscribe();
-
-    console.log(this.searchModel)
-
   }
 
-  // onClickSearch(search: string) {
-  //   this.search = search
-  //   this.onSearch()
-  //
-  // }
-
-  private onSearch(value: string): Observable<IGetImageResponse> {
+  private onSearch() {
     const query: any = this.search
     const per_page: number = this.per_page
     const page: number = this.page
 
-    return this.apiServices.onSearch(query, page, per_page);
-    //
-    // this.model$ = this.apiServices.onSearch(query, page, per_page).pipe(
-    //   map((response: IGetImageResponse) => {
-    //     return ({
-    //       items: response.results,
-    //       state: State.READY,
-    //     })
-    //   }),
-    //   startWith({state: State.PENDING}),
-    //   catchError(() => {
-    //     return of({state: State.ERROR})
-    //   })
-    // )
+    this.model$ = this.apiServices.onSearch(query, page, per_page).pipe(
+      map((response: IGetImageResponse) => {
+        return ({
+          items: response.results,
+          state: State.READY,
+        })
+      }),
+      startWith({state: State.PENDING}),
+      catchError(() => { return of({state: State.ERROR}) } )
+    )
+  }
+
+  onClickSearch(search: string) {
+    this.search = search
+    this.onSearch()
 
   }
 

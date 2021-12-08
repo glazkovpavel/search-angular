@@ -58,6 +58,9 @@
   &__item-like-button-active{
     background: url('../../assets/images/like__active.svg') center no-repeat;
   }
+  &.__item-delete-button{
+    background: url('../../assets/images/delete__icon.svg') center no-repeat;
+  }
 }
 
 @media screen and (max-width: 420px){

@@ -22,18 +22,15 @@ export class PhotoComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      debugger
-      // @ts-ignore
       this.model$ = this.apiServices.getPhotoById(params.id).pipe(
-        // @ts-ignore
         map((response: ISearchResult) => {
           return ({
             items: response,
-            state: 'READY'
+            state: State.READY
           })
         }),
-        startWith({state: "PENDING"}),
-        catchError(() => { return of({state: 'ERROR'}) } )
+        startWith({state: State.PENDING}),
+        catchError(() => { return of({state: State.ERROR}) } )
       )
 
 
