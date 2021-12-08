@@ -1,6 +1,6 @@
 .save{
   max-width: 880px;
-  margin: 0 auto;
+  margin: 20px auto 0;
   display: grid;
   gap: 32px;
   grid-template-columns: repeat(2, calc(50% - 16px));
@@ -47,10 +47,13 @@
     margin: auto 16px auto 0;
     cursor: pointer;
     background: url('../../assets/images/delete__icon.svg') center no-repeat;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, transform .3s;
   }
   &__item-button:hover {
     opacity: 0.8;
+    transform:  scale(1.6);
+
+
   }
 }
 

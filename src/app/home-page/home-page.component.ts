@@ -6,12 +6,26 @@ import {Observable, of} from "rxjs";
 import {Model, State} from "../interface/model.interface";
 import {SearchComponent} from "../search/search.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {state, style, trigger} from "@angular/animations";
+import {SavedServices} from "../shared/saved.services";
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
-  providers: [ApiServices]
+  providers: [ApiServices],
+  animations: [
+    trigger('like', [
+      state('start', style({
+        transition: 'transform .4s',
+        transform: 'scale(1)'
+      })),
+      state('end', style({
+        transition: 'transform .4s',
+        transform: 'scale(1.8)'
+      }))
+    ])
+  ]
 })
 export class HomePageComponent implements OnInit {
 
@@ -20,16 +34,16 @@ export class HomePageComponent implements OnInit {
 
   model$: Observable<Model<ISearchResult[], State>>
 
+  likeState: string = 'start'
   search: string = '';
   per_page: number = 12;
   page: number = 1;
   total_pages: number;
-  like: boolean;
+  like: boolean = false;
 
 
-  constructor(private apiServices: ApiServices) {
+  constructor(private apiServices: ApiServices, private savedServices: SavedServices) {
   }
-
 
   ngOnInit(): void {
 
@@ -78,13 +92,17 @@ export class HomePageComponent implements OnInit {
 
   handleDisLike(id: string) {
     this.like = !this.like
+    this.likeState = 'end'
     console.log('id', id)
   }
 
-  handleLikeButtonCLick(id: string) {
+  handleLikeButtonCLick(card: { card: ISearchResult }) {
     this.like = !this.like
-    localStorage.setItem('savedCardId', id)
-    console.log('id', id)
+    this.likeState = 'start'
+    //localStorage.setItem('savedCardId', JSON.stringify(card))
+    this.savedServices.saved(card)
+
+    console.log('id', JSON.stringify(card))
   }
 
   onRandom() {
