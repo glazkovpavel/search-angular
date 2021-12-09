@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {catchError, map, pairwise, startWith, take} from 'rxjs/operators';
-import {interval, Observable, of} from 'rxjs';
+import {interval, Observable, of, Subscription} from 'rxjs';
 import {ApiServices, ISearchResult} from "../shared/api.services";
 import {Model, State} from "../interface/model.interface";
 import {ICardSaveInterface} from "../interface/cardSave.interface";
+import {SavedServices} from "../shared/saved.services";
+import {IGetCardSaveInterface} from "../interface/getCardSaveInterface";
 
 @Component({
   selector: 'app-saved-card',
@@ -11,32 +13,35 @@ import {ICardSaveInterface} from "../interface/cardSave.interface";
   styleUrls: ['./saved-card.component.scss'],
   providers: [ApiServices]
 })
-export class SavedCardComponent implements OnInit {
-  model$: Observable<Model<ICardSaveInterface[], State>>
+export class SavedCardComponent implements OnInit, OnDestroy {
+
+  public cards: IGetCardSaveInterface[];
+  private cardSubscription: Subscription;
 
 
-  constructor(private apiServices: ApiServices) {
-    interval(1000)
-      .pipe(pairwise(), take(4))
-      .subscribe(console.log);
-  }
+  constructor(private savedServices: SavedServices) { }
 
   ngOnInit() {
-    // const idCard = localStorage.getItem('savedCardId')
-    // this.model$ = this.apiServices.getPhotoById(idCard).pipe(
-    //   map((response: ICardSaveInterface[]) => {
-    //     return ({
-    //       items: response,
-    //       state: State.READY
-    //     })
-    //   }),
-    //   startWith({state: State.PENDING}),
-    //   catchError(() => { return of({state: State.ERROR}) } )
-    // )
 
+    this.cardSubscription = this.savedServices.getAll().subscribe(
+      cards => {
+        this.cards = cards
+        console.log(this.cards)
+      }
+    )
   }
 
-  handleDeleteCard() {
+  ngOnDestroy() {
+    if(this.cardSubscription){
+      this.cardSubscription.unsubscribe()
+    }
+  }
 
+  handleDeleteCard(id) {
+
+    this.savedServices.remove(id).subscribe(
+      // @ts-ignore
+      this.cards = this.cards.filter(card => card.id !== id)
+    )
   }
 }
