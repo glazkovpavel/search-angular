@@ -92,13 +92,13 @@ export class HomePageComponent implements OnInit {
 
   handleDisLike(id: string) {
     this.like = !this.like
-    this.likeState = 'end'
+    this.likeState = 'start'
     console.log('id', id)
   }
 
   handleLikeButtonCLick(card) {
     this.like = !this.like
-    this.likeState = 'start'
+    this.likeState = 'end'
     this.savedServices.saved(card).subscribe()
 
     console.log('id', JSON.stringify(card))

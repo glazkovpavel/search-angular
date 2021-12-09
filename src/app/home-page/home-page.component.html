@@ -17,7 +17,7 @@
           <p class="card__description">{{card.user?.username}} {{card?.description}}</p>
           <button [@like]="likeState" [class]="like ?   'card__item-button card__item-like-button-active '
           : 'card__item-button card__item-like-button'"
-                  (click)="like ? handleLikeButtonCLick({card}) : handleDisLike(card.id)"></button>
+                  (click)="like ? handleDisLike(card.id) : handleLikeButtonCLick({card})"></button>
         </div>
       </div>
     </div>
