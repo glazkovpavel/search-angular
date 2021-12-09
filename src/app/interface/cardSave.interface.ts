@@ -1,6 +1,6 @@
 export interface ICardSaveInterface{
   id: string,
   urls: {regular: string},
-  user: {username: string},
+  user: {name: string},
   description: string
 }

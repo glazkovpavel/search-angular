@@ -1,32 +1,32 @@
 <app-header></app-header>
 
 
-<ng-container  *ngIf="model$ | async as model">
+<!--<ng-container  *ngIf="model$ | async as model">-->
 
-  <ng-container *ngIf="model.state==='READY'">
-    <ng-container class="loading" *ngIf="model.items.urls.regular.length === 0">
-      <p class="loading">Ничего не найдено...</p>
-      <button style="text-decoration: none" class="not-found__button" routerLink="/">⟵ Назад</button>
-    </ng-container>
-    <div class="save">
-      <div  class="save__img-wrapper" >
-        <a style="text-decoration: none" [routerLink]="['/photo', model.items.id]">
-          <img class="save__img" src="{{model.items.urls.regular}}" alt="{{model.items?.description}}"/>
-        </a>
-        <div class="save__container">
-          <p class="save__description">{{model.items.user.username}} {{model.items?.description}}</p>
-          <<button  class="save__item-button"
-                    (click)=" handleDeleteCard()"></button>
-        </div>
-      </div>
-    </div>
+<!--  <ng-container *ngIf="model.state==='READY'">-->
+<!--    <ng-container class="loading" *ngIf="model.items.urls.regular.length === 0">-->
+<!--      <p class="loading">Ничего не найдено...</p>-->
+<!--      <button style="text-decoration: none" class="not-found__button" routerLink="/">⟵ Назад</button>-->
+<!--    </ng-container>-->
+<!--    <div class="save">-->
+<!--      <div  class="save__img-wrapper" >-->
+<!--        <a style="text-decoration: none" [routerLink]="['/photo', model.items.id]">-->
+<!--          <img class="save__img" src="{{model.items.urls.regular}}" alt="{{model.items?.description}}"/>-->
+<!--        </a>-->
+<!--        <div class="save__container">-->
+<!--          <p class="save__description">{{model.items.user.name}} {{model.items?.description}}</p>-->
+<!--          <<button  class="save__item-button"-->
+<!--                    (click)=" handleDeleteCard()"></button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
-  </ng-container>
-  <ng-container class="loading" *ngIf="model.state === 'PENDING'">
-    <p class="loading">Загрузка...</p>
-  </ng-container>
+<!--  </ng-container>-->
+<!--  <ng-container class="loading" *ngIf="model.state === 'PENDING'">-->
+<!--    <p class="loading">Загрузка...</p>-->
+<!--  </ng-container>-->
 
-  <ng-container class="loading" *ngIf="model.state === 'ERROR'">
-    <app-not-found ></app-not-found>
-  </ng-container>
-</ng-container>
+<!--  <ng-container class="loading" *ngIf="model.state === 'ERROR'">-->
+<!--    <app-not-found ></app-not-found>-->
+<!--  </ng-container>-->
+<!--</ng-container>-->

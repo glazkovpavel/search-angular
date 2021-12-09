@@ -3,6 +3,7 @@ import {catchError, map, pairwise, startWith, take} from 'rxjs/operators';
 import {interval, Observable, of} from 'rxjs';
 import {ApiServices, ISearchResult} from "../shared/api.services";
 import {Model, State} from "../interface/model.interface";
+import {ICardSaveInterface} from "../interface/cardSave.interface";
 
 @Component({
   selector: 'app-saved-card',
@@ -11,7 +12,7 @@ import {Model, State} from "../interface/model.interface";
   providers: [ApiServices]
 })
 export class SavedCardComponent implements OnInit {
-  model$: Observable<Model<ISearchResult, State>>
+  model$: Observable<Model<ICardSaveInterface[], State>>
 
 
   constructor(private apiServices: ApiServices) {
@@ -21,17 +22,17 @@ export class SavedCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    const idCard = localStorage.getItem('savedCardId')
-    this.model$ = this.apiServices.getPhotoById(idCard).pipe(
-      map((response: ISearchResult) => {
-        return ({
-          items: response,
-          state: State.READY
-        })
-      }),
-      startWith({state: State.PENDING}),
-      catchError(() => { return of({state: State.ERROR}) } )
-    )
+    // const idCard = localStorage.getItem('savedCardId')
+    // this.model$ = this.apiServices.getPhotoById(idCard).pipe(
+    //   map((response: ICardSaveInterface[]) => {
+    //     return ({
+    //       items: response,
+    //       state: State.READY
+    //     })
+    //   }),
+    //   startWith({state: State.PENDING}),
+    //   catchError(() => { return of({state: State.ERROR}) } )
+    // )
 
   }
 
