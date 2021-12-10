@@ -13,6 +13,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { SavedCardComponent } from './saved-card/saved-card.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HeaderComponent,
     FooterComponent,
     SearchComponent,
-    SavedCardComponent
+    SavedCardComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

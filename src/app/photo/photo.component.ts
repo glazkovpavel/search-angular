@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
-import {ApiServices, ISearchResult} from "../shared/api.services";
+import {ApiServices} from "../shared/api.services";
 import {Observable, of} from "rxjs";
 import {catchError, map, startWith} from "rxjs/operators";
 import {Model, State} from "../interface/model.interface";
+import {ISearchResult} from "../interface/searchResult";
 
 @Component({
   selector: 'app-photo',
@@ -14,7 +15,6 @@ import {Model, State} from "../interface/model.interface";
 export class PhotoComponent implements OnInit {
 
   model$: Observable<Model<ISearchResult, State>>
-  myError: boolean
 
   constructor(
     private apiServices: ApiServices,

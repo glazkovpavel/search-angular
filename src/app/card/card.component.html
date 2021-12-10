@@ -1,0 +1,11 @@
+<div  class="card__img-wrapper">
+  <a style="text-decoration: none" [routerLink]="['/photo', card.id]">
+    <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>
+  </a>
+  <div class="card__container">
+    <p class="card__description">{{card.user?.username}} {{card?.description}}</p>
+    <button [@like]="likeState" [class]="like ? 'card__item-button card__item-like-button-active '
+          : 'card__item-button card__item-like-button'"
+            (click)="like ? handleDisLike(card.id) : handleLikeButtonCLick({card})"></button>
+  </div>
+</div>

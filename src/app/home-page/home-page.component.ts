@@ -1,46 +1,32 @@
 import {Component, Input, OnDestroy, OnInit,} from '@angular/core';
-import {ApiServices, IGetImageResponse, ISearchResult} from "../shared/api.services";
+import {ApiServices, IGetImageResponse} from "../shared/api.services";
 import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from "rxjs/operators";
 import {ICardInterface} from "../interface/card.interface";
-import {Observable, of} from "rxjs";
+import {forkJoin, Observable, of} from "rxjs";
 import {Model, State} from "../interface/model.interface";
 import {SearchComponent} from "../search/search.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {state, style, trigger} from "@angular/animations";
 import {SavedServices} from "../shared/saved.services";
+import {ISearchResult} from "../interface/searchResult";
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
   providers: [ApiServices],
-  animations: [
-    trigger('like', [
-      state('start', style({
-        transition: 'transform .4s',
-        transform: 'scale(1)'
-      })),
-      state('end', style({
-        transition: 'transform .4s',
-        transform: 'scale(1.8)'
-      }))
-    ])
-  ]
 })
+
 export class HomePageComponent implements OnInit {
 
-  public remove: SearchComponent;
   public form: FormGroup;
 
   model$: Observable<Model<ISearchResult[], State>>
 
-  likeState: string = 'start'
   search: string = '';
   per_page: number = 12;
   page: number = 1;
   total_pages: number;
-  like: boolean = false;
-
 
   constructor(private apiServices: ApiServices, private savedServices: SavedServices) {
   }
@@ -65,6 +51,7 @@ export class HomePageComponent implements OnInit {
         Validators.required
       ])
     });
+
   }
 
   private onSearch() {
@@ -90,23 +77,8 @@ export class HomePageComponent implements OnInit {
 
   }
 
-  handleDisLike(id: string) {
-    this.like = !this.like
-    this.likeState = 'start'
-    console.log('id', id)
-  }
-
-  handleLikeButtonCLick(card) {
-    this.like = !this.like
-    this.likeState = 'end'
-    this.savedServices.saved(card).subscribe()
-
-    console.log('id', JSON.stringify(card))
-  }
-
   onRandom() {
     this.ngOnInit()
-
   }
 
   onRefresh() {

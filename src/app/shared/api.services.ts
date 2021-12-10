@@ -2,14 +2,7 @@ import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, switchMap} from "rxjs/operators";
 import {BehaviorSubject, Observable, of, Subject} from "rxjs";
-import {ICardInterface} from "../interface/card.interface";
-
-export interface ISearchResult {
-  id: string,
-  urls: {regular: string},
-  user: {username: string},
-  description: string
-}
+import {ISearchResult} from "../interface/searchResult";
 
 export interface IGetImageResponse {
   results: ISearchResult[],
