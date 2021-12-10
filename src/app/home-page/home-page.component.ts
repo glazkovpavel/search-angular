@@ -63,6 +63,7 @@ export class HomePageComponent implements OnInit {
       map((response: IGetImageResponse) => {
         return ({
           items: response.results,
+          total_pages: response.total_pages,
           state: State.READY,
         })
       }),

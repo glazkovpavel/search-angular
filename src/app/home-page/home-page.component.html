@@ -12,17 +12,7 @@
       <ng-container *ngFor="let card of model.items">
         <app-card [card]="card"></app-card>
       </ng-container>
-<!--      <div  class="card__img-wrapper" *ngFor="let card of model.items">-->
-<!--       <a style="text-decoration: none" [routerLink]="['/photo', card.id]">-->
-<!--         <img class="card__img" src="{{card.urls.regular}}" alt="{{card.description}}"/>-->
-<!--       </a>-->
-<!--        <div class="card__container">-->
-<!--          <p class="card__description">{{card.user?.username}} {{card?.description}}</p>-->
-<!--          <button [@like]="likeState" [class]="like ?   'card__item-button card__item-like-button-active '-->
-<!--          : 'card__item-button card__item-like-button'"-->
-<!--                  (click)="like ? handleDisLike(card.id) : handleLikeButtonCLick({card})"></button>-->
-<!--        </div>-->
-<!--      </div>-->
+
     </div>
 
   </ng-container>
@@ -36,3 +26,12 @@
 </ng-container>
 
 <app-footer></app-footer>
+
+<div>
+  <div className="pagination">
+<!--    {props.pages.map((pageId, index) => <span-->
+<!--            key={index}-->
+<!--    className={props.page === pageId ? "pagination__current-page" : "pagination__page"}-->
+<!--    onClick={() => props.setPage(pageId)}>{pageId}</span>)}-->
+  </div>
+</div>
