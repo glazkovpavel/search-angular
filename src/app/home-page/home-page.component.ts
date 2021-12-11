@@ -62,6 +62,7 @@ export class HomePageComponent implements OnInit {
     const query: any = this.search
     const per_page: number = this.per_page
     const page: number = this.page
+    this.pages = [];
 
     this.model$ = this.apiServices.onSearch(query, page, per_page).pipe(
       map((response: IGetImageResponse) => {
@@ -82,9 +83,15 @@ export class HomePageComponent implements OnInit {
   }
 
   onClickSearch(search: string) {
-    this.search = search
-    this.onSearch()
 
+    if(this.search === search){
+      this.search = search;
+      this.onSearch();
+    } else {
+      this.search = search;
+      this.page = 1;
+      this.onSearch();
+    }
   }
 
   onRandom() {
@@ -98,9 +105,6 @@ export class HomePageComponent implements OnInit {
 
   pageChanged(event: any) {
     this.page = event.currentTarget.innerHTML;
-    this.current_page = event.currentTarget.innerHTML;
-    console.log('event.currentTarget.innerHTML', event.currentTarget.innerHTML)
-    console.log('event', event)
     this.onSearch()
     this.pages = [];
   }
