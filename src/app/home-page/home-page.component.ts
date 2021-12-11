@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit,} from '@angular/core';
 import {ApiServices, IGetImageResponse} from "../shared/api.services";
-import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from "rxjs/operators";
+import {catchError, debounceTime, distinctUntilChanged, finalize, map, startWith, switchMap, tap} from "rxjs/operators";
 import {ICardInterface} from "../interface/card.interface";
 import {forkJoin, Observable, of} from "rxjs";
 import {Model, State} from "../interface/model.interface";
@@ -9,6 +9,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {state, style, trigger} from "@angular/animations";
 import {SavedServices} from "../shared/saved.services";
 import {ISearchResult} from "../interface/searchResult";
+import { PaginationService} from "../shared/pagination.services";
 
 @Component({
   selector: 'app-home-page',
@@ -27,8 +28,10 @@ export class HomePageComponent implements OnInit {
   per_page: number = 12;
   page: number = 1;
   total_pages: number;
+  pages = [];
+  current_page: number;
 
-  constructor(private apiServices: ApiServices, private savedServices: SavedServices) {
+  constructor(private apiServices: ApiServices, private paginationService: PaginationService) {
   }
 
   ngOnInit(): void {
@@ -52,6 +55,7 @@ export class HomePageComponent implements OnInit {
       ])
     });
 
+
   }
 
   private onSearch() {
@@ -61,15 +65,20 @@ export class HomePageComponent implements OnInit {
 
     this.model$ = this.apiServices.onSearch(query, page, per_page).pipe(
       map((response: IGetImageResponse) => {
-        return ({
+        return this.total_pages = response.total_pages,
+          ({
           items: response.results,
-          total_pages: response.total_pages,
+          total_pages: response,
           state: State.READY,
         })
       }),
       startWith({state: State.PENDING}),
-      catchError(() => { return of({state: State.ERROR}) } )
+      catchError(() => { return of({state: State.ERROR}) } ),
+      finalize(()=> {
+        this.paginationService.createPages(this.pages, this.total_pages, this.page)
+      })
     )
+
   }
 
   onClickSearch(search: string) {
@@ -85,6 +94,15 @@ export class HomePageComponent implements OnInit {
   onRefresh() {
     debugger
     this.apiServices.refresh();
+  }
+
+  pageChanged(event: any) {
+    this.page = event.currentTarget.innerHTML;
+    this.current_page = event.currentTarget.innerHTML;
+    console.log('event.currentTarget.innerHTML', event.currentTarget.innerHTML)
+    console.log('event', event)
+    this.onSearch()
+    this.pages = [];
   }
 }
 
