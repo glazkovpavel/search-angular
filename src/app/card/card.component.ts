@@ -40,10 +40,11 @@ export class CardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  handleDisLike(id: string) {
+  handleDisLike(id) {
+    debugger;
     this.like = !this.like;
     this.likeState = 'start';
-    const card_id = this.cardLike.find(id => id)
+    const card_id = this.cardLike.find(item => item.card_id === id)
     this.cardDeleteSubscription = this.savedServices.remove(card_id.id_cardDB).subscribe()
   }
 
