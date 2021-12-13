@@ -17,9 +17,7 @@ export class SavedServices {
       name: card.card.user.name,
       urls: card.card.urls.regular,
       description: card.card.description
-    }).pipe(
-      catchError(() => of(null))
-    ) as Observable<ICardSaveInterface>;
+    })
   }
 
   public getAll() {
@@ -35,7 +33,7 @@ export class SavedServices {
       )
   }
 
-  public remove(id: string): Observable<void> {
+  public remove(id: string) {
      return this.http.delete<void>(`${environment.fbDbUrl}/saved-cards/${id}.json`)
   }
 

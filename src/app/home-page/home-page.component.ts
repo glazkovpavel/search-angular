@@ -35,7 +35,6 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.model$ = this.apiServices.getRandom().pipe(
       map((response: ISearchResult[]) => {
         return ({
@@ -54,8 +53,6 @@ export class HomePageComponent implements OnInit {
         Validators.required
       ])
     });
-
-
   }
 
   private onSearch() {
@@ -69,7 +66,6 @@ export class HomePageComponent implements OnInit {
         return this.total_pages = response.total_pages,
           ({
           items: response.results,
-          total_pages: response,
           state: State.READY,
         })
       }),
@@ -79,7 +75,6 @@ export class HomePageComponent implements OnInit {
         this.paginationService.createPages(this.pages, this.total_pages, this.page)
       })
     )
-
   }
 
   onClickSearch(search: string) {
