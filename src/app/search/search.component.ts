@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {ApiServices} from "../shared/api.services";
 import {distinctUntilChanged} from "rxjs/operators";
 
@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
 
   @Output() onClick: EventEmitter<string> = new EventEmitter();
 
-  @Input() form: FormGroup
+  @Input() form: UntypedFormGroup
 
   constructor() { }
 

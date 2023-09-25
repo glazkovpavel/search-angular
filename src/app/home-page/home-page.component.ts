@@ -1,13 +1,9 @@
-import {Component, Input, OnDestroy, OnInit,} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import {ApiServices, IGetImageResponse} from "../shared/api.services";
-import {catchError, debounceTime, distinctUntilChanged, finalize, map, startWith, switchMap, tap} from "rxjs/operators";
-import {ICardInterface} from "../interface/card.interface";
-import {forkJoin, Observable, of} from "rxjs";
+import {catchError, finalize, map, startWith} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 import {Model, State} from "../interface/model.interface";
-import {SearchComponent} from "../search/search.component";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {state, style, trigger} from "@angular/animations";
-import {SavedServices} from "../shared/saved.services";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {ISearchResult} from "../interface/searchResult";
 import { PaginationService} from "../shared/pagination.services";
 
@@ -20,7 +16,7 @@ import { PaginationService} from "../shared/pagination.services";
 
 export class HomePageComponent implements OnInit {
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   model$: Observable<Model<ISearchResult[], State>>
 
@@ -48,8 +44,8 @@ export class HomePageComponent implements OnInit {
       })
     );
 
-    this.form = new FormGroup({
-      search: new FormControl(null, [
+    this.form = new UntypedFormGroup({
+      search: new UntypedFormControl(null, [
         Validators.required
       ])
     });
