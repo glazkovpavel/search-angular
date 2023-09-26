@@ -1,0 +1,6 @@
+<h3>Join-creation-operators!</h3>
+<ng-container *ngIf="forkJoin$ | async as fork">
+  <p>{{fork.foo}}</p>
+  <p>{{fork.baz}}</p>
+  <p>{{fork.bar}}</p>
+</ng-container>
