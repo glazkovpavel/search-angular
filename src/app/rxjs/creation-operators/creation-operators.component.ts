@@ -41,6 +41,7 @@ export class CreationOperatorsComponent implements OnInit {
     timer(3000).pipe(concatMap(() => source)).subscribe((val) => console.log(val))
   }
 
+  // generate - работает по принципу цикла for
   private testGenerate(): void {
     const generate$: Observable<number> =
       generate(1, x => x < 10, x => x + 1, x => x * 2).pipe(
